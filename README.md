@@ -1,11 +1,12 @@
-RTL8188FU driver for Linux kernel 4.15.x ~ 6.7.x (Linux Mint, Ubuntu or Debian Derivatives)
+Driver RTL8188FU para kernel Linux 4.15.x ~ 6.7.x (Linux Mint, Ubuntu ou Debian Derivatives)
 
-info: rtl8188fu support will be add to rtl8xxxu module of Linux kernel. https://patchwork.kernel.org/project/linux-wireless/patch/b14f299d-3248-98fe-eee1-ba50d2e76c74@gmail.com/
+
+info: o suporte rtl8188fu será adicionado ao módulo rtl8xxxu do kernel Linux. https://patchwork.kernel.org/project/linux-wireless/patch/b14f299d-3248-98fe-eee1-ba50d2e76c74@gmail.com/
 
 
 ------------------
 
-## How to install
+## Como instalar
 
 `sudo apt-get install build-essential git dkms linux-headers-$(uname -r)`
 
@@ -17,11 +18,11 @@ info: rtl8188fu support will be add to rtl8xxxu module of Linux kernel. https://
 
 ------------------
 
-## Configuration
+## Configuração
 
-#### Disable Power Management
+#### Desative o gerenciamento de energia
 
-Run following commands for disable power management and plugging/replugging issues.
+Execute os seguintes comandos para desativar o gerenciamento de energia e problemas de conexão/reconexão.
 
 `sudo mkdir -p /etc/modprobe.d/`
 
@@ -29,9 +30,10 @@ Run following commands for disable power management and plugging/replugging issu
 
 `echo "options rtl8188fu rtw_power_mgnt=0 rtw_enusbss=0 rtw_ips_mode=0" | sudo tee /etc/modprobe.d/rtl8188fu.conf`
 
-#### Disable MAC Address Spoofing
 
-Run following commands for disabling MAC Address Spoofing (Note: This is not needed on Ubuntu based distributions. MAC Address Spoofing is already disable on Ubuntu base).
+#### Desativar falsificação de endereço MAC
+
+Execute os seguintes comandos para desabilitar a falsificação de endereço MAC (Nota: isso não é necessário em distribuições baseadas no Ubuntu. A falsificação de endereço MAC já está desabilitada na base do Ubuntu).
 
 `sudo mkdir -p /etc/NetworkManager/conf.d/`
 
@@ -39,35 +41,35 @@ Run following commands for disabling MAC Address Spoofing (Note: This is not nee
 
 `echo -e "[device]\nwifi.scan-rand-mac-address=no" | sudo tee /etc/NetworkManager/conf.d/disable-random-mac.conf`
 
-#### Blacklist (alias) for kernel 5.15 and 5.16 (No needed for kernel 5.17 and up)
+#### Blacklist (alias) para kernel 5.15 e 5.16 (não é necessário para kernel 5.17 e superior)
 
-If you are using kernel 5.15 and 5.16, you must create a configuration file with following command for preventing to conflict rtl8188fu module with built-in r8188eu module.
+Se você estiver usando o kernel 5.15 e 5.16, você deve criar um arquivo de configuração com o seguinte comando para evitar conflito entre o módulo rtl8188fu e o módulo r8188eu integrado.
 
 `echo 'alias usb:v0BDApF179d*dc*dsc*dp*icFFiscFFipFFin* rtl8188fu' | sudo tee /etc/modprobe.d/r8188eu-blacklist.conf`
 
-#### Blacklist (alias) for kernel 6.2 and up
+#### Blacklist (alias) para kernel 6.2 e superior
 
-If you are using kernel 6.2 and up, you must create a configuration file with following command for preventing to conflict rtl8188fu module with built-in rtl8xxxu module.
+Se você estiver usando o kernel 6.2 e superior, você deve criar um arquivo de configuração com o seguinte comando para evitar conflito entre o módulo rtl8188fu e o módulo rtl8xxxu integrado.
 
 `echo 'alias usb:v0BDApF179d*dc*dsc*dp*icFFiscFFipFFin* rtl8188fu' | sudo tee /etc/modprobe.d/rtl8xxxu-blacklist.conf`
 
-##### Then you must update initramfs
+##### Então você deve atualizar o initramfs
 
-For initramfs
+Para initramfs
 
 `sudo update-initramfs -u`
 
-For dracut
+Para dracut
 
 `sudo dracut -q --force`
 
-##### Enable rtl8188fu module
+##### Habilitar módulo rtl8188fu
 
-Run following command for up to kernel 6.1
+Execute o seguinte comando para o kernel 6.1
 
 `sudo modprobe rtl8188fu`
 
-Run following commands for kernel 6.2 and up
+Execute os seguintes comandos para kernel 6.2 e superior
 
 `sudo modprobe -r rtl8188fu`
 
@@ -75,7 +77,7 @@ Run following commands for kernel 6.2 and up
 
 ------------------
 
-## How to uninstall
+## Como desinstalar
 
 `sudo dkms remove rtl8188fu/1.0 --all`
 
